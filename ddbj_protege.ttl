@@ -1,0 +1,620 @@
+@prefix : <http://ddbj.nig.ac.jp/ontologies/ddbj/> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@base <http://ddbj.nig.ac.jp/ontologies/ddbj> .
+
+<http://ddbj.nig.ac.jp/ontologies/ddbj> rdf:type owl:Ontology ;
+                                         owl:versionIRI :20210112 ;
+                                         rdfs:seeAlso <https://trace.ddbj.nig.ac.jp/biosample/index_e.html> ;
+                                         dcterms:license <http://creativecommons.org/licenses/by/4.0/> ;
+                                         rdfs:label "DDBJ ontology" ;
+                                         owl:versionInfo "version dev" ;
+                                         rdfs:comment "DDBJ ontology for semantic representation of the DDBJ submission and publication" .
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://ddbj.nig.ac.jp/ontologies/ddbj/hasObject
+:hasObject rdf:type owl:ObjectProperty .
+
+
+###  http://ddbj.nig.ac.jp/ontologies/ddbj/hasPart
+:hasPart rdf:type owl:ObjectProperty ;
+         rdfs:domain [ rdf:type owl:Class ;
+                       owl:unionOf ( :Database_entry
+                                     :File
+                                   )
+                     ] ;
+         rdfs:range [ rdf:type owl:Class ;
+                      owl:unionOf ( :Data_item
+                                    :File
+                                  )
+                    ] .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://ddbj.nig.ac.jp/ontologies/ddbj/Annotated_sequence_entry
+:Annotated_sequence_entry rdf:type owl:Class ;
+                          rdfs:subClassOf :Database_entry .
+
+
+###  http://ddbj.nig.ac.jp/ontologies/ddbj/Annotation
+:Annotation rdf:type owl:Class .
+
+
+###  http://ddbj.nig.ac.jp/ontologies/ddbj/Assay_metadata
+:Assay_metadata rdf:type owl:Class ;
+                rdfs:subClassOf :Metadata .
+
+
+###  http://ddbj.nig.ac.jp/ontologies/ddbj/BIOPROJECT
+:BIOPROJECT rdf:type owl:Class ;
+            rdfs:subClassOf :Metadata .
+
+
+###  http://ddbj.nig.ac.jp/ontologies/ddbj/BIOSAMPLE
+:BIOSAMPLE rdf:type owl:Class ;
+           rdfs:subClassOf :Metadata .
+
+
+###  http://ddbj.nig.ac.jp/ontologies/ddbj/BioProject_entry
+:BioProject_entry rdf:type owl:Class ;
+                  rdfs:subClassOf :Database_entry .
+
+
+###  http://ddbj.nig.ac.jp/ontologies/ddbj/BioSample_entry
+:BioSample_entry rdf:type owl:Class ;
+                 rdfs:subClassOf :Database_entry .
+
+
+###  http://ddbj.nig.ac.jp/ontologies/ddbj/Collective
+:Collective rdf:type owl:Class ;
+            rdfs:subClassOf :Social_structure .
+
+
+###  http://ddbj.nig.ac.jp/ontologies/ddbj/Computational_entity
+:Computational_entity rdf:type owl:Class ;
+                      rdfs:subClassOf :Information_content_entity .
+
+
+###  http://ddbj.nig.ac.jp/ontologies/ddbj/DDBJ_Annotation_Format_File
+:DDBJ_Annotation_Format_File rdf:type owl:Class ;
+                             rdfs:subClassOf :File .
+
+
+###  http://ddbj.nig.ac.jp/ontologies/ddbj/DDBJ_Excel_Format_File
+:DDBJ_Excel_Format_File rdf:type owl:Class ;
+                        rdfs:subClassOf :File ,
+                                        [ rdf:type owl:Restriction ;
+                                          owl:onProperty :hasPart ;
+                                          owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                          owl:onClass :Assay_metadata
+                                        ] ,
+                                        [ rdf:type owl:Restriction ;
+                                          owl:onProperty :hasPart ;
+                                          owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                          owl:onClass :BIOPROJECT
+                                        ] ,
+                                        [ rdf:type owl:Restriction ;
+                                          owl:onProperty :hasPart ;
+                                          owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                          owl:onClass :BIOSAMPLE
+                                        ] ,
+                                        [ rdf:type owl:Restriction ;
+                                          owl:onProperty :hasPart ;
+                                          owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                          owl:onClass :Entry_metadata
+                                        ] ,
+                                        [ rdf:type owl:Restriction ;
+                                          owl:onProperty :hasPart ;
+                                          owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                          owl:onClass :Experiment_metadata
+                                        ] ,
+                                        [ rdf:type owl:Restriction ;
+                                          owl:onProperty :hasPart ;
+                                          owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                          owl:onClass :Sample_metadata
+                                        ] ,
+                                        [ rdf:type owl:Restriction ;
+                                          owl:onProperty :hasPart ;
+                                          owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                          owl:onClass :Sampleset_metadata
+                                        ] ,
+                                        [ rdf:type owl:Restriction ;
+                                          owl:onProperty :hasPart ;
+                                          owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                          owl:onClass :Study_metadata
+                                        ] ,
+                                        [ rdf:type owl:Restriction ;
+                                          owl:onProperty :hasPart ;
+                                          owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                          owl:onClass :Submitter_metadata
+                                        ] ,
+                                        [ rdf:type owl:Restriction ;
+                                          owl:onProperty :hasPart ;
+                                          owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                          owl:onClass :VARIANT_CALL
+                                        ] ,
+                                        [ rdf:type owl:Restriction ;
+                                          owl:onProperty :hasPart ;
+                                          owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                          owl:onClass :VARIANT_REGION
+                                        ] ,
+                                        [ rdf:type owl:Restriction ;
+                                          owl:onProperty :hasPart ;
+                                          owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                          owl:onClass :VCF
+                                        ] .
+
+
+###  http://ddbj.nig.ac.jp/ontologies/ddbj/DRA_entry
+:DRA_entry rdf:type owl:Class ;
+           rdfs:subClassOf :Database_entry .
+
+
+###  http://ddbj.nig.ac.jp/ontologies/ddbj/Data_item
+:Data_item rdf:type owl:Class ;
+           rdfs:subClassOf :Computational_entity .
+
+
+###  http://ddbj.nig.ac.jp/ontologies/ddbj/Database_entry
+:Database_entry rdf:type owl:Class ;
+                rdfs:subClassOf :Computational_entity .
+
+
+###  http://ddbj.nig.ac.jp/ontologies/ddbj/Dataset
+:Dataset rdf:type owl:Class ;
+         rdfs:subClassOf :Data_item .
+
+
+###  http://ddbj.nig.ac.jp/ontologies/ddbj/Document
+:Document rdf:type owl:Class ;
+          rdfs:subClassOf :Textual_entity .
+
+
+###  http://ddbj.nig.ac.jp/ontologies/ddbj/Entry_Status
+:Entry_Status rdf:type owl:Class ;
+              rdfs:subClassOf :Status .
+
+
+###  http://ddbj.nig.ac.jp/ontologies/ddbj/Entry_metadata
+:Entry_metadata rdf:type owl:Class ;
+                rdfs:subClassOf :Metadata .
+
+
+###  http://ddbj.nig.ac.jp/ontologies/ddbj/Experiment_metadata
+:Experiment_metadata rdf:type owl:Class ;
+                     rdfs:subClassOf :Metadata .
+
+
+###  http://ddbj.nig.ac.jp/ontologies/ddbj/FASTA_Format_File
+:FASTA_Format_File rdf:type owl:Class ;
+                   rdfs:subClassOf :File .
+
+
+###  http://ddbj.nig.ac.jp/ontologies/ddbj/File
+:File rdf:type owl:Class ;
+      rdfs:subClassOf :Media .
+
+
+###  http://ddbj.nig.ac.jp/ontologies/ddbj/GEA_entry
+:GEA_entry rdf:type owl:Class ;
+           rdfs:subClassOf :Database_entry .
+
+
+###  http://ddbj.nig.ac.jp/ontologies/ddbj/INSDC_policy
+:INSDC_policy rdf:type owl:Class ;
+              rdfs:subClassOf :Open_access_policy .
+
+
+###  http://ddbj.nig.ac.jp/ontologies/ddbj/Information_content_entity
+:Information_content_entity rdf:type owl:Class ;
+                            rdfs:subClassOf :Object .
+
+
+###  http://ddbj.nig.ac.jp/ontologies/ddbj/Input_item
+:Input_item rdf:type owl:Class .
+
+
+###  http://ddbj.nig.ac.jp/ontologies/ddbj/Invalid
+:Invalid rdf:type owl:Class ;
+         rdfs:subClassOf :Validation_Status .
+
+
+###  http://ddbj.nig.ac.jp/ontologies/ddbj/JGA_entry
+:JGA_entry rdf:type owl:Class ;
+           rdfs:subClassOf :Database_entry .
+
+
+###  http://ddbj.nig.ac.jp/ontologies/ddbj/JVar_dataset
+:JVar_dataset rdf:type owl:Class ;
+              rdfs:subClassOf :Dataset .
+
+
+###  http://ddbj.nig.ac.jp/ontologies/ddbj/JVar_entry
+:JVar_entry rdf:type owl:Class ;
+            rdfs:subClassOf :Database_entry ,
+                            [ rdf:type owl:Restriction ;
+                              owl:onProperty :hasObject ;
+                              owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                              owl:onClass :Assay_metadata
+                            ] ,
+                            [ rdf:type owl:Restriction ;
+                              owl:onProperty :hasObject ;
+                              owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                              owl:onClass :BIOPROJECT
+                            ] ,
+                            [ rdf:type owl:Restriction ;
+                              owl:onProperty :hasObject ;
+                              owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                              owl:onClass :BIOSAMPLE
+                            ] ,
+                            [ rdf:type owl:Restriction ;
+                              owl:onProperty :hasObject ;
+                              owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                              owl:onClass :Experiment_metadata
+                            ] ,
+                            [ rdf:type owl:Restriction ;
+                              owl:onProperty :hasObject ;
+                              owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                              owl:onClass :Sample_metadata
+                            ] ,
+                            [ rdf:type owl:Restriction ;
+                              owl:onProperty :hasObject ;
+                              owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                              owl:onClass :Sampleset_metadata
+                            ] ,
+                            [ rdf:type owl:Restriction ;
+                              owl:onProperty :hasObject ;
+                              owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                              owl:onClass :Submitter_metadata
+                            ] ,
+                            [ rdf:type owl:Restriction ;
+                              owl:onProperty :hasPart ;
+                              owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+                              owl:onClass :VCF_File
+                            ] ,
+                            [ rdf:type owl:Restriction ;
+                              owl:onProperty :hasObject ;
+                              owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                              owl:onClass :Entry_metadata
+                            ] ,
+                            [ rdf:type owl:Restriction ;
+                              owl:onProperty :hasObject ;
+                              owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                              owl:onClass :Study_metadata
+                            ] ,
+                            [ rdf:type owl:Restriction ;
+                              owl:onProperty :hasPart ;
+                              owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                              owl:onClass :DDBJ_Excel_Format_File
+                            ] ;
+            rdfs:isDefinedBy <http://ddbj.nig.ac.jp/ontologies/jvar> ;
+            rdfs:label "JVar entry" ;
+            rdfs:seeAlso "https://www.ddbj.nig.ac.jp/jvar/" ;
+            owl:versionInfo "1.0.0" .
+
+
+###  http://ddbj.nig.ac.jp/ontologies/ddbj/Killed
+:Killed rdf:type owl:Class ;
+        rdfs:subClassOf :Entry_Status .
+
+
+###  http://ddbj.nig.ac.jp/ontologies/ddbj/Language_entity
+:Language_entity rdf:type owl:Class ;
+                 rdfs:subClassOf :Information_content_entity .
+
+
+###  http://ddbj.nig.ac.jp/ontologies/ddbj/Media
+:Media rdf:type owl:Class ;
+       rdfs:subClassOf :Information_content_entity .
+
+
+###  http://ddbj.nig.ac.jp/ontologies/ddbj/Metadata
+:Metadata rdf:type owl:Class ;
+          rdfs:subClassOf :Data_item .
+
+
+###  http://ddbj.nig.ac.jp/ontologies/ddbj/Object
+:Object rdf:type owl:Class .
+
+
+###  http://ddbj.nig.ac.jp/ontologies/ddbj/Open_access_policy
+:Open_access_policy rdf:type owl:Class ;
+                    rdfs:subClassOf :Policy .
+
+
+###  http://ddbj.nig.ac.jp/ontologies/ddbj/Organization
+:Organization rdf:type owl:Class ;
+              rdfs:subClassOf :Collective .
+
+
+###  http://ddbj.nig.ac.jp/ontologies/ddbj/Person
+:Person rdf:type owl:Class ;
+        rdfs:subClassOf :Specialized_object .
+
+
+###  http://ddbj.nig.ac.jp/ontologies/ddbj/Policy
+:Policy rdf:type owl:Class .
+
+
+###  http://ddbj.nig.ac.jp/ontologies/ddbj/Primary_Annotation
+:Primary_Annotation rdf:type owl:Class ;
+                    rdfs:subClassOf :Annotation .
+
+
+###  http://ddbj.nig.ac.jp/ontologies/ddbj/Principal_investigator
+:Principal_investigator rdf:type owl:Class ;
+                        rdfs:subClassOf :Submitter_role .
+
+
+###  http://ddbj.nig.ac.jp/ontologies/ddbj/Private
+:Private rdf:type owl:Class ;
+         rdfs:subClassOf :Entry_Status .
+
+
+###  http://ddbj.nig.ac.jp/ontologies/ddbj/Public
+:Public rdf:type owl:Class ;
+        rdfs:subClassOf :Entry_Status .
+
+
+###  http://ddbj.nig.ac.jp/ontologies/ddbj/Publication
+:Publication rdf:type owl:Class ;
+             rdfs:subClassOf :Document .
+
+
+###  http://ddbj.nig.ac.jp/ontologies/ddbj/Registered_access_policy
+:Registered_access_policy rdf:type owl:Class ;
+                          rdfs:subClassOf :Policy .
+
+
+###  http://ddbj.nig.ac.jp/ontologies/ddbj/Research_Field
+:Research_Field rdf:type owl:Class .
+
+
+###  http://ddbj.nig.ac.jp/ontologies/ddbj/SNP
+:SNP rdf:type owl:Class ;
+     rdfs:subClassOf :JVar_dataset ;
+     owl:disjointWith :SV .
+
+
+###  http://ddbj.nig.ac.jp/ontologies/ddbj/SV
+:SV rdf:type owl:Class ;
+    rdfs:subClassOf :JVar_dataset .
+
+
+###  http://ddbj.nig.ac.jp/ontologies/ddbj/Sample_metadata
+:Sample_metadata rdf:type owl:Class ;
+                 rdfs:subClassOf :Metadata .
+
+
+###  http://ddbj.nig.ac.jp/ontologies/ddbj/Sampleset_metadata
+:Sampleset_metadata rdf:type owl:Class ;
+                    rdfs:subClassOf :Metadata .
+
+
+###  http://ddbj.nig.ac.jp/ontologies/ddbj/Scientific_data
+:Scientific_data rdf:type owl:Class ;
+                 rdfs:subClassOf :Data_item .
+
+
+###  http://ddbj.nig.ac.jp/ontologies/ddbj/Social_entity
+:Social_entity rdf:type owl:Class ;
+               rdfs:subClassOf :Information_content_entity .
+
+
+###  http://ddbj.nig.ac.jp/ontologies/ddbj/Social_structure
+:Social_structure rdf:type owl:Class ;
+                  rdfs:subClassOf :Social_entity .
+
+
+###  http://ddbj.nig.ac.jp/ontologies/ddbj/Specialized_object
+:Specialized_object rdf:type owl:Class ;
+                    rdfs:subClassOf :Object .
+
+
+###  http://ddbj.nig.ac.jp/ontologies/ddbj/Status
+:Status rdf:type owl:Class .
+
+
+###  http://ddbj.nig.ac.jp/ontologies/ddbj/Study_metadata
+:Study_metadata rdf:type owl:Class ;
+                rdfs:subClassOf :Metadata .
+
+
+###  http://ddbj.nig.ac.jp/ontologies/ddbj/Submitted
+:Submitted rdf:type owl:Class ;
+           rdfs:subClassOf :Entry_Status .
+
+
+###  http://ddbj.nig.ac.jp/ontologies/ddbj/Submitter_department
+:Submitter_department rdf:type owl:Class ;
+                      rdfs:subClassOf :Input_item .
+
+
+###  http://ddbj.nig.ac.jp/ontologies/ddbj/Submitter_email
+:Submitter_email rdf:type owl:Class ;
+                 rdfs:subClassOf :Input_item .
+
+
+###  http://ddbj.nig.ac.jp/ontologies/ddbj/Submitter_faculty
+:Submitter_faculty rdf:type owl:Class ;
+                   rdfs:subClassOf :Input_item .
+
+
+###  http://ddbj.nig.ac.jp/ontologies/ddbj/Submitter_fax
+:Submitter_fax rdf:type owl:Class ;
+               rdfs:subClassOf :Input_item .
+
+
+###  http://ddbj.nig.ac.jp/ontologies/ddbj/Submitter_first_name
+:Submitter_first_name rdf:type owl:Class ;
+                      rdfs:subClassOf :Submitter_name .
+
+
+###  http://ddbj.nig.ac.jp/ontologies/ddbj/Submitter_handle
+:Submitter_handle rdf:type owl:Class ;
+                  rdfs:subClassOf :Input_item .
+
+
+###  http://ddbj.nig.ac.jp/ontologies/ddbj/Submitter_laboratory
+:Submitter_laboratory rdf:type owl:Class ;
+                      rdfs:subClassOf :Input_item .
+
+
+###  http://ddbj.nig.ac.jp/ontologies/ddbj/Submitter_last_name
+:Submitter_last_name rdf:type owl:Class ;
+                     rdfs:subClassOf :Submitter_name .
+
+
+###  http://ddbj.nig.ac.jp/ontologies/ddbj/Submitter_metadata
+:Submitter_metadata rdf:type owl:Class ;
+                    rdfs:subClassOf :Metadata ,
+                                    [ rdf:type owl:Restriction ;
+                                      owl:onProperty :hasPart ;
+                                      owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                      owl:onClass :Submitter_department
+                                    ] ,
+                                    [ rdf:type owl:Restriction ;
+                                      owl:onProperty :hasPart ;
+                                      owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                      owl:onClass :Submitter_email
+                                    ] ,
+                                    [ rdf:type owl:Restriction ;
+                                      owl:onProperty :hasPart ;
+                                      owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                      owl:onClass :Submitter_faculty
+                                    ] ,
+                                    [ rdf:type owl:Restriction ;
+                                      owl:onProperty :hasPart ;
+                                      owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                      owl:onClass :Submitter_fax
+                                    ] ,
+                                    [ rdf:type owl:Restriction ;
+                                      owl:onProperty :hasPart ;
+                                      owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                      owl:onClass :Submitter_first_name
+                                    ] ,
+                                    [ rdf:type owl:Restriction ;
+                                      owl:onProperty :hasPart ;
+                                      owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                      owl:onClass :Submitter_handle
+                                    ] ,
+                                    [ rdf:type owl:Restriction ;
+                                      owl:onProperty :hasPart ;
+                                      owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                      owl:onClass :Submitter_laboratory
+                                    ] ,
+                                    [ rdf:type owl:Restriction ;
+                                      owl:onProperty :hasPart ;
+                                      owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                      owl:onClass :Submitter_last_name
+                                    ] ,
+                                    [ rdf:type owl:Restriction ;
+                                      owl:onProperty :hasPart ;
+                                      owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                      owl:onClass :Submitter_organization
+                                    ] ,
+                                    [ rdf:type owl:Restriction ;
+                                      owl:onProperty :hasPart ;
+                                      owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                      owl:onClass :Submitter_role
+                                    ] ,
+                                    [ rdf:type owl:Restriction ;
+                                      owl:onProperty :hasPart ;
+                                      owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                      owl:onClass :Submitter_telephone
+                                    ] .
+
+
+###  http://ddbj.nig.ac.jp/ontologies/ddbj/Submitter_name
+:Submitter_name rdf:type owl:Class ;
+                rdfs:subClassOf :Input_item .
+
+
+###  http://ddbj.nig.ac.jp/ontologies/ddbj/Submitter_organization
+:Submitter_organization rdf:type owl:Class ;
+                        rdfs:subClassOf :Input_item .
+
+
+###  http://ddbj.nig.ac.jp/ontologies/ddbj/Submitter_role
+:Submitter_role rdf:type owl:Class ;
+                rdfs:subClassOf :Input_item .
+
+
+###  http://ddbj.nig.ac.jp/ontologies/ddbj/Submitter_telephone
+:Submitter_telephone rdf:type owl:Class ;
+                     rdfs:subClassOf :Input_item .
+
+
+###  http://ddbj.nig.ac.jp/ontologies/ddbj/Suppressed
+:Suppressed rdf:type owl:Class ;
+            rdfs:subClassOf :Entry_Status .
+
+
+###  http://ddbj.nig.ac.jp/ontologies/ddbj/Textual_entity
+:Textual_entity rdf:type owl:Class ;
+                rdfs:subClassOf :Language_entity .
+
+
+###  http://ddbj.nig.ac.jp/ontologies/ddbj/Third_Party_Annotation
+:Third_Party_Annotation rdf:type owl:Class ;
+                        rdfs:subClassOf :Annotation .
+
+
+###  http://ddbj.nig.ac.jp/ontologies/ddbj/Unsubmitted
+:Unsubmitted rdf:type owl:Class ;
+             rdfs:subClassOf :Entry_Status .
+
+
+###  http://ddbj.nig.ac.jp/ontologies/ddbj/VARIANT_CALL
+:VARIANT_CALL rdf:type owl:Class ;
+              rdfs:subClassOf :Variant .
+
+
+###  http://ddbj.nig.ac.jp/ontologies/ddbj/VARIANT_REGION
+:VARIANT_REGION rdf:type owl:Class ;
+                rdfs:subClassOf :Variant .
+
+
+###  http://ddbj.nig.ac.jp/ontologies/ddbj/VCF
+:VCF rdf:type owl:Class ;
+     rdfs:subClassOf :Variant .
+
+
+###  http://ddbj.nig.ac.jp/ontologies/ddbj/VCF_File
+:VCF_File rdf:type owl:Class ;
+          rdfs:subClassOf :File ,
+                          [ rdf:type owl:Restriction ;
+                            owl:onProperty :hasPart ;
+                            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                            owl:onClass :VCF
+                          ] .
+
+
+###  http://ddbj.nig.ac.jp/ontologies/ddbj/Valid
+:Valid rdf:type owl:Class ;
+       rdfs:subClassOf :Validation_Status .
+
+
+###  http://ddbj.nig.ac.jp/ontologies/ddbj/Validation_Status
+:Validation_Status rdf:type owl:Class ;
+                   rdfs:subClassOf :Status .
+
+
+###  http://ddbj.nig.ac.jp/ontologies/ddbj/Variant
+:Variant rdf:type owl:Class ;
+         rdfs:subClassOf :Scientific_data .
+
+
+###  Generated by the OWL API (version 4.2.8.20170104-2310) https://github.com/owlcs/owlapi

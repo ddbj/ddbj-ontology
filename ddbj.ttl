@@ -1,0 +1,531 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix : <http://ddbj.nig.ac.jp/ontologies/ddbj/> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+
+<http://ddbj.nig.ac.jp/ontologies/ddbj>
+    dcterms:license <http://creativecommons.org/licenses/by/4.0/> ;
+    a owl:Ontology ;
+    rdfs:comment "DDBJ ontology for semantic representation of the DDBJ submission and publication" ;
+    rdfs:label "DDBJ ontology" ;
+    rdfs:seeAlso <https://trace.ddbj.nig.ac.jp/biosample/index_e.html> ;
+    owl:versionIRI <http://ddbj.nig.ac.jp/ontologies/ddbj/20210112> ;
+    owl:versionInfo "version dev" .
+
+:Annotated_sequence_entry
+    a owl:Class ;
+    rdfs:subClassOf :Database_entry .
+
+:Annotation
+    a owl:Class .
+
+:Assay_metadata
+    a owl:Class ;
+    rdfs:subClassOf :Metadata .
+
+:BIOPROJECT
+    a owl:Class ;
+    rdfs:subClassOf :Metadata .
+
+:BIOSAMPLE
+    a owl:Class ;
+    rdfs:subClassOf :Metadata .
+
+:BioProject_entry
+    a owl:Class ;
+    rdfs:subClassOf :Database_entry .
+
+:BioSample_entry
+    a owl:Class ;
+    rdfs:subClassOf :Database_entry .
+
+:Collective
+    a owl:Class ;
+    rdfs:subClassOf :Social_structure .
+
+:Computational_entity
+    a owl:Class ;
+    rdfs:subClassOf :Information_content_entity .
+
+:DDBJ_Annotation_Format_File
+    a owl:Class ;
+    rdfs:subClassOf :File .
+
+:DDBJ_Excel_Format_File
+    a owl:Class ;
+    rdfs:subClassOf :File, [
+        a owl:Restriction ;
+        owl:onClass :Entry_metadata ;
+        owl:onProperty :hasPart ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+    ], [
+        a owl:Restriction ;
+        owl:onClass :Experiment_metadata ;
+        owl:onProperty :hasPart ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+    ], [
+        a owl:Restriction ;
+        owl:onClass :Sample_metadata ;
+        owl:onProperty :hasPart ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+    ], [
+        a owl:Restriction ;
+        owl:onClass :Sampleset_metadata ;
+        owl:onProperty :hasPart ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+    ], [
+        a owl:Restriction ;
+        owl:onClass :Study_metadata ;
+        owl:onProperty :hasPart ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+    ], [
+        a owl:Restriction ;
+        owl:onClass :Submitter_metadata ;
+        owl:onProperty :hasPart ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+    ], [
+        a owl:Restriction ;
+        owl:onClass :VARIANT_CALL ;
+        owl:onProperty :hasPart ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+    ], [
+        a owl:Restriction ;
+        owl:onClass :VARIANT_REGION ;
+        owl:onProperty :hasPart ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+    ], [
+        a owl:Restriction ;
+        owl:onClass :VCF ;
+        owl:onProperty :hasPart ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+    ], [
+        a owl:Restriction ;
+        owl:onClass :Assay_metadata ;
+        owl:onProperty :hasPart ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+    ], [
+        a owl:Restriction ;
+        owl:onClass :BIOPROJECT ;
+        owl:onProperty :hasPart ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+    ], [
+        a owl:Restriction ;
+        owl:onClass :BIOSAMPLE ;
+        owl:onProperty :hasPart ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+    ] .
+
+:DRA_entry
+    a owl:Class ;
+    rdfs:subClassOf :Database_entry .
+
+:Data_item
+    a owl:Class ;
+    rdfs:subClassOf :Computational_entity .
+
+:Database_entry
+    a owl:Class ;
+    rdfs:subClassOf :Computational_entity .
+
+:Dataset
+    a owl:Class ;
+    rdfs:subClassOf :Data_item .
+
+:Document
+    a owl:Class ;
+    rdfs:subClassOf :Textual_entity .
+
+:Entry_Status
+    a owl:Class ;
+    rdfs:subClassOf :Status .
+
+:Entry_metadata
+    a owl:Class ;
+    rdfs:subClassOf :Metadata .
+
+:Experiment_metadata
+    a owl:Class ;
+    rdfs:subClassOf :Metadata .
+
+:FASTA_Format_File
+    a owl:Class ;
+    rdfs:subClassOf :File .
+
+:File
+    a owl:Class ;
+    rdfs:subClassOf :Media .
+
+:GEA_entry
+    a owl:Class ;
+    rdfs:subClassOf :Database_entry .
+
+:INSDC_policy
+    a owl:Class ;
+    rdfs:subClassOf :Open_access_policy .
+
+:Information_content_entity
+    a owl:Class ;
+    rdfs:subClassOf :Object .
+
+:Input_item
+    a owl:Class .
+
+:Invalid
+    a owl:Class ;
+    rdfs:subClassOf :Validation_Status .
+
+:JGA_entry
+    a owl:Class ;
+    rdfs:subClassOf :Database_entry .
+
+:JVar_dataset
+    a owl:Class ;
+    rdfs:subClassOf :Dataset .
+
+:JVar_entry
+    a owl:Class ;
+    rdfs:isDefinedBy <http://ddbj.nig.ac.jp/ontologies/jvar> ;
+    rdfs:label "JVar entry" ;
+    rdfs:seeAlso "https://www.ddbj.nig.ac.jp/jvar/" ;
+    rdfs:subClassOf :Database_entry, [
+        a owl:Restriction ;
+        owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+        owl:onClass :Assay_metadata ;
+        owl:onProperty :hasObject
+    ], [
+        a owl:Restriction ;
+        owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+        owl:onClass :BIOPROJECT ;
+        owl:onProperty :hasObject
+    ], [
+        a owl:Restriction ;
+        owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+        owl:onClass :BIOSAMPLE ;
+        owl:onProperty :hasObject
+    ], [
+        a owl:Restriction ;
+        owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+        owl:onClass :Experiment_metadata ;
+        owl:onProperty :hasObject
+    ], [
+        a owl:Restriction ;
+        owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+        owl:onClass :Sample_metadata ;
+        owl:onProperty :hasObject
+    ], [
+        a owl:Restriction ;
+        owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+        owl:onClass :Sampleset_metadata ;
+        owl:onProperty :hasObject
+    ], [
+        a owl:Restriction ;
+        owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+        owl:onClass :Submitter_metadata ;
+        owl:onProperty :hasObject
+    ], [
+        a owl:Restriction ;
+        owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+        owl:onClass :VCF_File ;
+        owl:onProperty :hasPart
+    ], [
+        a owl:Restriction ;
+        owl:onClass :Entry_metadata ;
+        owl:onProperty :hasObject ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+    ], [
+        a owl:Restriction ;
+        owl:onClass :Study_metadata ;
+        owl:onProperty :hasObject ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+    ], [
+        a owl:Restriction ;
+        owl:onClass :DDBJ_Excel_Format_File ;
+        owl:onProperty :hasPart ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+    ] ;
+    owl:versionInfo "1.0.0" .
+
+:Killed
+    a owl:Class ;
+    rdfs:subClassOf :Entry_Status .
+
+:Language_entity
+    a owl:Class ;
+    rdfs:subClassOf :Information_content_entity .
+
+:Media
+    a owl:Class ;
+    rdfs:subClassOf :Information_content_entity .
+
+:Metadata
+    a owl:Class ;
+    rdfs:subClassOf :Data_item .
+
+:Object
+    a owl:Class .
+
+:Open_access_policy
+    a owl:Class ;
+    rdfs:subClassOf :Policy .
+
+:Organization
+    a owl:Class ;
+    rdfs:subClassOf :Collective .
+
+:Person
+    a owl:Class ;
+    rdfs:subClassOf :Specialized_object .
+
+:Policy
+    a owl:Class .
+
+:Primary_Annotation
+    a owl:Class ;
+    rdfs:subClassOf :Annotation .
+
+:Principal_investigator
+    a owl:Class ;
+    rdfs:subClassOf :Submitter_role .
+
+:Private
+    a owl:Class ;
+    rdfs:subClassOf :Entry_Status .
+
+:Public
+    a owl:Class ;
+    rdfs:subClassOf :Entry_Status .
+
+:Publication
+    a owl:Class ;
+    rdfs:subClassOf :Document .
+
+:Registered_access_policy
+    a owl:Class ;
+    rdfs:subClassOf :Policy .
+
+:Research_Field
+    a owl:Class .
+
+:SNP
+    a owl:Class ;
+    rdfs:subClassOf :JVar_dataset ;
+    owl:disjointWith :SV .
+
+:SV
+    a owl:Class ;
+    rdfs:subClassOf :JVar_dataset .
+
+:Sample_metadata
+    a owl:Class ;
+    rdfs:subClassOf :Metadata .
+
+:Sampleset_metadata
+    a owl:Class ;
+    rdfs:subClassOf :Metadata .
+
+:Scientific_data
+    a owl:Class ;
+    rdfs:subClassOf :Data_item .
+
+:Social_entity
+    a owl:Class ;
+    rdfs:subClassOf :Information_content_entity .
+
+:Social_structure
+    a owl:Class ;
+    rdfs:subClassOf :Social_entity .
+
+:Specialized_object
+    a owl:Class ;
+    rdfs:subClassOf :Object .
+
+:Status
+    a owl:Class .
+
+:Study_metadata
+    a owl:Class ;
+    rdfs:subClassOf :Metadata .
+
+:Submitted
+    a owl:Class ;
+    rdfs:subClassOf :Entry_Status .
+
+:Submitter_department
+    a owl:Class ;
+    rdfs:subClassOf :Input_item .
+
+:Submitter_email
+    a owl:Class ;
+    rdfs:subClassOf :Input_item .
+
+:Submitter_faculty
+    a owl:Class ;
+    rdfs:subClassOf :Input_item .
+
+:Submitter_fax
+    a owl:Class ;
+    rdfs:subClassOf :Input_item .
+
+:Submitter_first_name
+    a owl:Class ;
+    rdfs:subClassOf :Submitter_name .
+
+:Submitter_handle
+    a owl:Class ;
+    rdfs:subClassOf :Input_item .
+
+:Submitter_laboratory
+    a owl:Class ;
+    rdfs:subClassOf :Input_item .
+
+:Submitter_last_name
+    a owl:Class ;
+    rdfs:subClassOf :Submitter_name .
+
+:Submitter_metadata
+    a owl:Class ;
+    rdfs:subClassOf :Metadata, [
+        a owl:Restriction ;
+        owl:onClass :Submitter_department ;
+        owl:onProperty :hasPart ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+    ], [
+        a owl:Restriction ;
+        owl:onClass :Submitter_email ;
+        owl:onProperty :hasPart ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+    ], [
+        a owl:Restriction ;
+        owl:onClass :Submitter_faculty ;
+        owl:onProperty :hasPart ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+    ], [
+        a owl:Restriction ;
+        owl:onClass :Submitter_fax ;
+        owl:onProperty :hasPart ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+    ], [
+        a owl:Restriction ;
+        owl:onClass :Submitter_first_name ;
+        owl:onProperty :hasPart ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+    ], [
+        a owl:Restriction ;
+        owl:onClass :Submitter_handle ;
+        owl:onProperty :hasPart ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+    ], [
+        a owl:Restriction ;
+        owl:onClass :Submitter_laboratory ;
+        owl:onProperty :hasPart ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+    ], [
+        a owl:Restriction ;
+        owl:onClass :Submitter_last_name ;
+        owl:onProperty :hasPart ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+    ], [
+        a owl:Restriction ;
+        owl:onClass :Submitter_organization ;
+        owl:onProperty :hasPart ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+    ], [
+        a owl:Restriction ;
+        owl:onClass :Submitter_role ;
+        owl:onProperty :hasPart ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+    ], [
+        a owl:Restriction ;
+        owl:onClass :Submitter_telephone ;
+        owl:onProperty :hasPart ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+    ] .
+
+:Submitter_name
+    a owl:Class ;
+    rdfs:subClassOf :Input_item .
+
+:Submitter_organization
+    a owl:Class ;
+    rdfs:subClassOf :Input_item .
+
+:Submitter_role
+    a owl:Class ;
+    rdfs:subClassOf :Input_item .
+
+:Submitter_telephone
+    a owl:Class ;
+    rdfs:subClassOf :Input_item .
+
+:Suppressed
+    a owl:Class ;
+    rdfs:subClassOf :Entry_Status .
+
+:Textual_entity
+    a owl:Class ;
+    rdfs:subClassOf :Language_entity .
+
+:Third_Party_Annotation
+    a owl:Class ;
+    rdfs:subClassOf :Annotation .
+
+:Unsubmitted
+    a owl:Class ;
+    rdfs:subClassOf :Entry_Status .
+
+:VARIANT_CALL
+    a owl:Class ;
+    rdfs:subClassOf :Variant .
+
+:VARIANT_REGION
+    a owl:Class ;
+    rdfs:subClassOf :Variant .
+
+:VCF
+    a owl:Class ;
+    rdfs:subClassOf :Variant .
+
+:VCF_File
+    a owl:Class ;
+    rdfs:subClassOf :File, [
+        a owl:Restriction ;
+        owl:onClass :VCF ;
+        owl:onProperty :hasPart ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+    ] .
+
+:Valid
+    a owl:Class ;
+    rdfs:subClassOf :Validation_Status .
+
+:Validation_Status
+    a owl:Class ;
+    rdfs:subClassOf :Status .
+
+:Variant
+    a owl:Class ;
+    rdfs:subClassOf :Scientific_data .
+
+:hasObject
+    a owl:ObjectProperty .
+
+:hasPart
+    a owl:ObjectProperty ;
+    rdfs:domain [
+        a owl:Class ;
+        owl:unionOf (:Database_entry
+            :File
+        )
+    ] ;
+    rdfs:range [
+        a owl:Class ;
+        owl:unionOf (:Data_item
+            :File
+        )
+    ] .
+
